@@ -1,0 +1,11 @@
+bin/
+obj/
+*.user
+*.suo
+*.accounts
+accounts.json
+*.maFile
+.vs/
+app_settings.json
+release/
+*.zip
