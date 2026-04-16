@@ -2718,7 +2718,8 @@
         function copyRevocationCode() {
             const codeEl = document.getElementById('acc-settings-revocation-code') || document.getElementById('add-account-revocation-code');
             if (codeEl) {
-                const code = codeEl.textContent;
+                // Копируем реальный код из data-атрибута, если он есть, иначе из textContent
+                const code = codeEl.getAttribute('data-real-code') || codeEl.textContent;
                 navigator.clipboard.writeText(code).then(() => showToast(t('toast.rcodeCopied')));
                 window.chrome.webview.postMessage({ type: 'CopyRevocationCode', code: code });
             }
@@ -3266,7 +3267,8 @@
             const revCodeEl = document.getElementById('acc-settings-revocation-code');
             if (account.revocationCode) {
                 revContainer.style.display = 'block';
-                revCodeEl.textContent = account.revocationCode;
+                revCodeEl.textContent = maskRevocationCode(account.revocationCode);
+                revCodeEl.setAttribute('data-real-code', account.revocationCode); // Сохраняем реальный код
             } else {
                 revContainer.style.display = 'none';
             }
@@ -3560,6 +3562,14 @@
             return first + middle + last;
         }
 
+        function maskRevocationCode(rcode) {
+            if (!hideLogins || !rcode) {
+                return rcode;
+            }
+            // Rcode формат: XXXXX-XXXXX-XXXXX
+            return '•••••';
+        }
+
         function renderProxies(proxies) {
             currentProxies = proxies;
             const list = document.getElementById('proxies-list');
@@ -3821,7 +3831,9 @@
 
             if (type === 'ShowRevocationCode') {
                 setAddAccountStep(4);
-                document.getElementById('add-account-revocation-code').textContent = data.code;
+                const revCodeEl = document.getElementById('add-account-revocation-code');
+                revCodeEl.textContent = maskRevocationCode(data.code);
+                revCodeEl.setAttribute('data-real-code', data.code); // Сохраняем реальный код
                 showToast(data.message);
             }
 

@@ -1709,8 +1709,8 @@ namespace SteamGuard
             _autoConfirmationService?.Dispose();
             _confirmationService?.Dispose();
 
-            // Ждем завершения записи логов
-            AppLogger.ShutdownAsync().Wait(TimeSpan.FromSeconds(2));
+            // Запускаем shutdown логгера в фоне без ожидания
+            _ = Task.Run(async () => await AppLogger.ShutdownAsync());
 
             base.OnFormClosing(e);
         }
