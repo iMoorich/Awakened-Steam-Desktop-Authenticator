@@ -67,6 +67,7 @@ const translations = {
         'modal.account.autoTrade': 'Автоматическое принятие трейдов',
         'modal.account.autoMarket': 'Автоматическое принятие маркета',
         'modal.account.refreshSession': 'Обновить сессию',
+        'modal.account.steamProfile': 'Открыть профиль',
 
         'modal.confirmations.title': 'Подтверждения',
         'modal.confirmations.noConfirmations': 'Нет подтверждений',
@@ -135,6 +136,7 @@ const translations = {
         'toast.loading': 'Загрузка...',
         'toast.steamIdNotFound': 'SteamID не найден для этого аккаунта',
         'toast.refreshingSession': 'Обновление сессии...',
+        'toast.autoLoginStarting': 'Запуск автоматической авторизации...',
         'toast.fillAllFields': 'Заполните все поля',
         'toast.enterCode': 'Введите код',
         'toast.dataCopied': 'Данные скопированы в буфер обмена. Вставьте в Excel через Ctrl+V',
@@ -213,6 +215,7 @@ const translations = {
         'tooltip.delete': 'Удалить',
         'tooltip.autoTrade': 'Авто трейд',
         'tooltip.autoMarket': 'Авто маркет',
+        'tooltip.autoLogin': 'Автологин',
         'tooltip.profile': 'Профиль Steam',
         'tooltip.accountSettings': 'Настройки аккаунта',
 
@@ -289,6 +292,7 @@ const translations = {
         'modal.account.autoTrade': 'Auto-accept trades',
         'modal.account.autoMarket': 'Auto-accept market',
         'modal.account.refreshSession': 'Refresh session',
+        'modal.account.steamProfile': 'Open Profile',
 
         'modal.confirmations.title': 'Confirmations',
         'modal.confirmations.noConfirmations': 'No confirmations',
@@ -357,6 +361,7 @@ const translations = {
         'toast.loading': 'Loading...',
         'toast.steamIdNotFound': 'SteamID not found for this account',
         'toast.refreshingSession': 'Refreshing session...',
+        'toast.autoLoginStarting': 'Starting automatic authorization...',
         'toast.fillAllFields': 'Fill all fields',
         'toast.enterCode': 'Enter code',
         'toast.dataCopied': 'Data copied to clipboard. Paste into Excel with Ctrl+V',
@@ -435,6 +440,7 @@ const translations = {
         'tooltip.delete': 'Delete',
         'tooltip.autoTrade': 'Auto trade',
         'tooltip.autoMarket': 'Auto market',
+        'tooltip.autoLogin': 'Auto Login',
         'tooltip.profile': 'Steam Profile',
         'tooltip.accountSettings': 'Account settings',
 

@@ -1,5 +1,8 @@
 bin/
 obj/
+.appdata/
+.dotnet/
+.nuget/packages/
 *.user
 *.suo
 *.accounts

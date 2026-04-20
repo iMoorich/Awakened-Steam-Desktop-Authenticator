@@ -523,12 +523,12 @@
             animation: button-spin 0.6s linear infinite;
         }
 
-        .action-btn.profile-btn svg {
-            stroke: var(--text-dim);
+        .action-btn.login-btn svg {
+            stroke: var(--accent);
         }
 
-        .action-btn.profile-btn:hover svg {
-            stroke: var(--accent);
+        .action-btn.login-btn:hover svg {
+            stroke: #a8d98a;
         }
 
         .action-btn.settings-btn svg {
@@ -1747,11 +1747,6 @@
             <span data-i18n="context.refreshSession">Обновить сессию</span>
         </div>
         <div class="context-menu-divider"></div>
-        <div class="context-menu-item" onclick="contextMenuAction('profile')">
-            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            <span data-i18n="context.steamProfile">Профиль Steam</span>
-        </div>
-        <div class="context-menu-divider"></div>
         <div class="context-menu-item danger" onclick="contextMenuAction('remove')">
             <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
             <span data-i18n="context.removeAccount">Удалить аккаунт</span>
@@ -1803,6 +1798,16 @@
                         <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
                     </svg>
                     <span data-i18n="modal.account.refreshSession">Обновить сессию</span>
+                </button>
+            </div>
+            <div class="modal-field" style="margin-top: 8px;">
+                <button class="modal-btn" onclick="openSteamProfile()" style="width: 100%;">
+                    <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; stroke: currentColor; stroke-width: 2; fill: none; vertical-align: middle; margin-right: 6px;">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15 3 21 3 21 9"/>
+                        <line x1="10" y1="14" x2="21" y2="3"/>
+                    </svg>
+                    <span data-i18n="modal.account.steamProfile">Профиль Steam</span>
                 </button>
             </div>
             <div id="acc-settings-revocation" style="display: none;">
@@ -3029,11 +3034,11 @@
                         <span class="indicator auto-market ${account.autoMarket ? 'active' : 'inactive'}" data-tooltip="${t('tooltip.autoMarket')}"></span>
                     </div>
                     <div class="account-actions">
-                        <button class="action-btn profile-btn" data-account="${account.username}" data-tooltip="${t('tooltip.profile')}">
+                        <button class="action-btn login-btn" data-account="${account.username}" data-tooltip="${t('tooltip.autoLogin')}">
                             <svg viewBox="0 0 24 24">
-                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                                <polyline points="15 3 21 3 21 9"/>
-                                <line x1="10" y1="14" x2="21" y2="3"/>
+                                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                                <polyline points="10 17 15 12 10 7"/>
+                                <line x1="15" y1="12" x2="3" y2="12"/>
                             </svg>
                         </button>
                         <button class="action-btn settings-btn" data-account="${account.username}" data-tooltip="${t('tooltip.accountSettings')}">
@@ -3076,10 +3081,10 @@
                 });
             });
 
-            accountsListWrapper.querySelectorAll('.profile-btn').forEach(btn => {
+            accountsListWrapper.querySelectorAll('.login-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    openProfile(btn.dataset.account);
+                    autoLogin(btn.dataset.account);
                 });
             });
 
@@ -3131,6 +3136,26 @@
             } else {
                 showToast(t('toast.steamIdNotFound'));
             }
+        }
+
+        function openSteamProfile() {
+            const accountName = document.getElementById('acc-settings-username').textContent;
+            openProfile(accountName);
+        }
+
+        function autoLogin(accountName) {
+            const account = allAccounts.find(a => a.username === accountName);
+            if (!account) {
+                showToast('Аккаунт не найден');
+                return;
+            }
+
+            showToast(t('toast.autoLoginStarting'));
+
+            window.chrome.webview.postMessage({
+                type: 'AutoLogin',
+                accountName: accountName
+            });
         }
 
         // ===== CONTEXT MENU =====
